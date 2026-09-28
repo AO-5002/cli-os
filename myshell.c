@@ -8,22 +8,30 @@
 #include <sys/wait.h>
 
 
-enum CMD { TEST, PD, LS, EXIT, OTHER };
-enum CMD encode(const char *s);
+typedef enum { TEST, PS, LS, EXIT, OTHER } CMD;
+char *flags[] = { "-e", "-a" };
+
+void prompt(char *input);
+CMD encode(const char *s);
 
 int main() {
+
+    const char *SRC = "./cmake-build-debug/";   // Executables' location
     char input [256] = "";
+
+    // CLI-loop
     while (1) {
-        printf("%% ");
-        fgets(input, 256, stdin);
+        prompt(input);
         if (encode(input) == EXIT) break;
 
         const int pid = fork();
         if (pid == 0) {
+            char copy [256];
+            strcpy(copy, SRC);
             switch (encode(input)) {
-                case TEST: { execv("./cmake-build-debug/test", NULL); _exit(0); }
-                case PD: { execv("./cmake-build-debug/pd", NULL); _exit(0); }
-                case LS: { execv("./cmake-build-debug/ls", NULL); _exit(0); }
+                case TEST: { execv(strcat(copy, "test"), NULL); _exit(0); }
+                case PS: { execv(strcat(copy, "ps"), NULL); _exit(0); }
+                case LS: { execv(strcat(copy, "ls"), NULL); _exit(0); }
                 default: { _exit(0); }
             }
         }
@@ -35,7 +43,14 @@ int main() {
     return 0;
 }
 
-enum CMD encode(const char *s) {
+// Helper-functions
+
+void prompt(char *input) {
+    printf("%% ");
+    fgets(input, 256, stdin);
+}
+
+CMD encode(const char *s) {
     if (strcmp(s, "exit\n") == 0) return EXIT;
     if (strcmp(s, "test\n") == 0) return TEST;
     return OTHER;
