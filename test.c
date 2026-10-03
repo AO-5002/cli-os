@@ -15,7 +15,7 @@ int main() {
 "\n"
 "Name: Andres Ortiz Osorio\n"
 "NetID: AXO220024\n"
-"Art By: SK\n";
+"ASCII Art By: SK\n";
 
     fputs(cat_art, stdout);
 }

@@ -52,6 +52,8 @@ void prompt(char *input) {
 
 CMD encode(const char *s) {
     if (strcmp(s, "exit\n") == 0) return EXIT;
+    if (strcmp(s, "ls\n") == 0) return LS;
+    if (strcmp(s, "ps\n") == 0) return PS;
     if (strcmp(s, "test\n") == 0) return TEST;
     return OTHER;
 }

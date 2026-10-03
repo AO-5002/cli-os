@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 17)
 
 add_executable(myshell myshell.c)
 add_executable(test test.c)
-add_executable(pd pd.c)
+add_executable(ps ps.c)
+add_executable(ls ls.c)
