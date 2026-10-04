@@ -19,8 +19,8 @@ int main() {
     printf("%7s  %s\n", "PID", "CMD");
 
     for (int i = 0; i < count; i++) {
-        char name [256] = "?";
-        proc_name(pids[i], name, sizeof(name));
+        char name[256];
+        if (proc_name(pids[i], name, sizeof(name)) <= 0) continue;
         printf("%7d  %s\n", pids[i], name);
     }
 

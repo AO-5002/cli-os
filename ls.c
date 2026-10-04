@@ -3,7 +3,23 @@
 //
 
 #include <stdio.h>
+#include <string.h>
+#include <dirent.h>
 
-// int main() {
-//
-// }
+int main(void) {
+    DIR *dir = opendir(".");
+    if (dir == NULL) {
+        perror("ls");
+        return 1;
+    }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        // Skip the "." and ".." entries
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) continue;
+        printf("%s\n", entry->d_name);
+    }
+
+    closedir(dir);
+    return 0;
+}
